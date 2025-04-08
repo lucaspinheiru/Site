@@ -151,21 +151,6 @@
       const startDate = new Date('2023-03-07');
       const now = new Date();
 
-function countOcurrences(day, month) {
-  let count = 0;
-  const start = new Date('2023-03-07');
-  const end = new Date();
-  for (let year = start.getFullYear(); year <= end.getFullYear(); year++) {
-    const birthday = new Date(year, month, day);
-    if (birthday >= start && birthday <= end) count++;
-  }
-  return count;
-}
-
-const aniversariosLucas = countOcurrences(18, 11); // 18 de dezembro
-const aniversariosEla = countOcurrences(9, 9);     // 9 de outubro
-
-
       let anos = now.getFullYear() - startDate.getFullYear();
       let meses = now.getMonth() - startDate.getMonth();
       if (meses < 0) {
@@ -175,8 +160,6 @@ const aniversariosEla = countOcurrences(9, 9);     // 9 de outubro
 
       const summary = document.getElementById('summary');
       summary.innerHTML = `
-        <p>🎂 Já vivemos <strong>${aniversariosLucas}</strong> aniversários meus juntos</p>
-        <p>🎉 Já vivemos <strong>${aniversariosEla}</strong> aniversários seus juntos</p>
         <p>💞 Estamos fazendo parte da vida um do outro há <strong>${anos} anos e ${meses} mês(es)</strong></p>
       `;
     }
