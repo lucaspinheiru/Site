@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -80,38 +79,40 @@
     ];
 
     function calcTimeAgo(dateStr) {
+      const [year, month, day] = dateStr.split('-').map(Number);
+      const past = new Date(year, month - 1, day);
       const now = new Date();
-      const past = new Date(dateStr);
       const diff = now - past;
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
       const minutes = Math.floor((diff / (1000 * 60)) % 60);
       const seconds = Math.floor((diff / 1000) % 60);
-      return ${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos atrás;
+      return `${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos atrás`;
     }
 
     const container = document.getElementById('events');
-    events.forEach((event, index) => {
+    events.forEach(event => {
+      const [year, month, day] = event.date.split('-').map(Number);
+      const localDate = new Date(year, month - 1, day);
       const div = document.createElement('div');
       div.className = 'event';
-      div.innerHTML = 
+      div.innerHTML = `
         <div class="event-title">${event.title}</div>
         <div class="event-subtitle">${event.subtitle}</div>
-        <div class="event-date">${new Date(event.date).toLocaleDateString()}</div>
+        <div class="event-date">${localDate.toLocaleDateString('pt-BR')}</div>
         <div class="timer" id="timer-${event.date}">${calcTimeAgo(event.date)}</div>
-      ;
+      `;
       container.appendChild(div);
 
-      // Insere casamento após a terceira viagem juntos
       if (event.date === '2024-06-01') {
         const casamentoDiv = document.createElement('div');
         casamentoDiv.className = 'event';
-        casamentoDiv.innerHTML = 
+        casamentoDiv.innerHTML = `
           <div class="event-title">💒👰🤵</div>
           <div class="event-subtitle">Nosso casamento</div>
           <div class="event-date">18/06/2025</div>
           <div class="timer" id="casamento-timer"></div>
-        ;
+        `;
         container.appendChild(casamentoDiv);
       }
     });
@@ -134,7 +135,7 @@
         const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const minutos = Math.floor((diff / (1000 * 60)) % 60);
         const segundos = Math.floor((diff / 1000) % 60);
-        el.textContent = Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para o nosso casamento 💖;
+        el.textContent = `Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para o nosso casamento 💖`;
       } else {
         el.textContent = calcTimeAgo('2025-06-18');
       }
@@ -142,30 +143,30 @@
 
     setInterval(() => {
       events.forEach(event => {
-        const el = document.getElementById(timer-${event.date});
+        const el = document.getElementById(`timer-${event.date}`);
         if (el) el.textContent = calcTimeAgo(event.date);
       });
       updateCasamentoTimer();
     }, 1000);
 
+    function countOccurrences(day, month) {
+      const start = new Date('2023-03-07');
+      const end = new Date();
+      let count = 0;
+      for (let year = start.getFullYear(); year <= end.getFullYear(); year++) {
+        const date = new Date(year, month, day);
+        if (date >= start && date <= end) count++;
+      }
+      return count;
+    }
+
     function showSummary() {
       const startDate = new Date('2023-03-07');
       const now = new Date();
 
-function countOcurrences(day, month) {
-  let count = 0;
-  const start = new Date('2023-03-07');
-  const end = new Date();
-  for (let year = start.getFullYear(); year <= end.getFullYear(); year++) {
-    const birthday = new Date(year, month, day);
-    if (birthday >= start && birthday <= end) count++;
-  }
-  return count;
-}
-
-const aniversariosLucas = countOcurrences(18, 11); // 18 de dezembro
-const aniversariosEla = countOcurrences(9, 9);     // 9 de outubro
-
+      const aniversariosLucas = countOccurrences(18, 11); // 18 de dezembro
+      const aniversariosEla = countOccurrences(9, 9);     // 9 de outubro
+      const diasNamorados = countOccurrences(12, 5);      // 12 de junho
 
       let anos = now.getFullYear() - startDate.getFullYear();
       let meses = now.getMonth() - startDate.getMonth();
@@ -175,11 +176,13 @@ const aniversariosEla = countOcurrences(9, 9);     // 9 de outubro
       }
 
       const summary = document.getElementById('summary');
-      summary.innerHTML = 
+      summary.innerHTML = `
         <p>🎂 Já vivemos <strong>${aniversariosLucas}</strong> aniversários meus juntos</p>
         <p>🎉 Já vivemos <strong>${aniversariosEla}</strong> aniversários seus juntos</p>
         <p>💞 Estamos fazendo parte da vida um do outro há <strong>${anos} anos e ${meses} mês(es)</strong></p>
-      ;
+        <p>💘 Já comemoramos <strong>${diasNamorados}</strong> Dias dos Namorados juntos</p>
+        <p>🧂 E compartilhamos <strong>01</strong> pacote de sal até agora 😄</p>
+      `;
     }
 
     showSummary();
