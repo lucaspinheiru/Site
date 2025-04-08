@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nosso Amor</title>
   <style>
     body {
@@ -12,9 +12,11 @@
       padding: 20px;
       text-align: center;
     }
+
     h1 {
       color: #d63384;
     }
+
     .event {
       background: #ffffff;
       border-radius: 20px;
@@ -23,24 +25,29 @@
       margin: 20px auto;
       max-width: 400px;
     }
+
     .event-title {
       font-size: 1.4em;
       color: #6f42c1;
     }
+
     .event-subtitle {
       font-size: 1em;
       color: #555;
       margin-top: 5px;
       margin-bottom: 10px;
     }
+
     .event-date {
       color: #888;
     }
+
     .timer {
       margin-top: 10px;
       font-weight: bold;
       font-size: 1.2em;
     }
+
     .summary {
       margin-top: 40px;
       padding: 20px;
@@ -51,6 +58,7 @@
       margin-right: auto;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
     .summary p {
       font-size: 1.1em;
       color: #444;
@@ -60,7 +68,6 @@
 </head>
 <body>
   <h1>Nosso Amor em Cada Momento</h1>
-
   <div id="events"></div>
   <div class="summary" id="summary"></div>
 
@@ -75,9 +82,11 @@
       { date: '2023-06-06', title: '💍👩‍❤️‍👨', subtitle: 'Começamos a usar alianças' },
       { date: '2023-10-13', title: '🏖️👩‍❤️‍👨', subtitle: 'Segunda viagem juntos' },
       { date: '2024-01-14', title: '🏠👩‍❤️‍👨', subtitle: 'Começamos a morar juntos' },
-      { date: '2024-06-01', title: '🏖️🏃🏻🏃🏻‍♀️👩‍❤️‍👨', subtitle: 'Terceira viagem juntos' },
-      { date: '2024-06-01', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' }
+      { date: '2024-06-01', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },
+      { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
     ];
+
+    events.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     function calcTimeAgo(dateStr) {
       const [year, month, day] = dateStr.split('-').map(Number);
@@ -91,37 +100,10 @@
       return `${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos atrás`;
     }
 
-    const container = document.getElementById('events');
-    events.forEach(event => {
-      const [year, month, day] = event.date.split('-').map(Number);
-      const localDate = new Date(year, month - 1, day);
-      const div = document.createElement('div');
-      div.className = 'event';
-      div.innerHTML = `
-        <div class="event-title">${event.title}</div>
-        <div class="event-subtitle">${event.subtitle}</div>
-        <div class="event-date">${localDate.toLocaleDateString('pt-BR')}</div>
-        <div class="timer" id="timer-${event.date}">${calcTimeAgo(event.date)}</div>
-      `;
-      container.appendChild(div);
-
-      if (event.date === '2024-06-01') {
-        const casamentoDiv = document.createElement('div');
-        casamentoDiv.className = 'event';
-        casamentoDiv.innerHTML = `
-          <div class="event-title">💒👰🤵</div>
-          <div class="event-subtitle">Nosso casamento</div>
-          <div class="event-date">18/06/2025</div>
-          <div class="timer" id="casamento-timer"></div>
-        `;
-        container.appendChild(casamentoDiv);
-      }
-    });
-
     function updateCasamentoTimer() {
       const casamento = new Date('2025-06-18T00:00:00');
       const agora = new Date();
-      const el = document.getElementById('casamento-timer');
+      const el = document.getElementById('timer-2025-06-18');
       if (!el) return;
 
       if (
@@ -136,18 +118,37 @@
         const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const minutos = Math.floor((diff / (1000 * 60)) % 60);
         const segundos = Math.floor((diff / 1000) % 60);
-        el.textContent = `Faltam ${dias} dias, ${horas} horas, ${minutos} minutos e ${segundos} segundos para o nosso casamento 💖`;
+        el.innerHTML = `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos para o nosso casamento 💖`;
       } else {
         el.textContent = calcTimeAgo('2025-06-18');
       }
     }
 
+    const container = document.getElementById('events');
+    events.forEach(event => {
+      const [year, month, day] = event.date.split('-').map(Number);
+      const localDate = new Date(year, month - 1, day);
+
+      const div = document.createElement('div');
+      div.className = 'event';
+      div.innerHTML = `
+        <div class="event-title">${event.title}</div>
+        <div class="event-subtitle">${event.subtitle}</div>
+        <div class="event-date">${localDate.toLocaleDateString('pt-BR')}</div>
+        <div class="timer" id="timer-${event.date}"></div>
+      `;
+      container.appendChild(div);
+    });
+
     setInterval(() => {
       events.forEach(event => {
         const el = document.getElementById(`timer-${event.date}`);
-        if (el) el.textContent = calcTimeAgo(event.date);
+        if (event.isCasamento) {
+          updateCasamentoTimer();
+        } else if (el) {
+          el.textContent = calcTimeAgo(event.date);
+        }
       });
-      updateCasamentoTimer();
     }, 1000);
 
     function countOccurrences(day, month) {
