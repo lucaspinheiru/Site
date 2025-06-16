@@ -1,4 +1,3 @@
-@@ -1,193 +1,193 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -65,11 +64,58 @@
       color: #444;
       margin: 10px 0;
     }
+
+    /* Estilo do carrossel de bodas */
+    .carousel-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding: 10px 0;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    .boda-card {
+      min-width: 220px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      padding: 15px;
+      background: linear-gradient(145deg, #fefefe, #e0e0e0);
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+      scroll-snap-align: start;
+      transition: transform 0.3s ease;
+    }
+
+    .boda-card.future {
+      background: linear-gradient(145deg, #e0f7fa, #b2ebf2);
+    }
+
+    .boda-card.past {
+      background: linear-gradient(145deg, #e8f5e9, #c8e6c9);
+    }
+
+    .boda-card h4 {
+      margin: 0 0 6px 0;
+      font-size: 16px;
+    }
+
+    .boda-card p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .boda-card:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
   <h1>Nosso Amor em Cada Momento</h1>
   <div id="events"></div>
+  <h2>💍 Nossas Bodas</h2>
+  <div id="bodasCarousel" class="carousel-container"></div>
   <div class="summary" id="summary"></div>
 
   <script>
@@ -102,30 +148,6 @@
       return `${days} dias, ${hours} horas, ${minutes} minutos e ${seconds} segundos atrás`;
     }
 
-    function updateCasamentoTimer() {
-      const casamento = new Date('2025-06-18T00:00:00');
-      const agora = new Date();
-      const el = document.getElementById('timer-2025-06-18');
-      if (!el) return;
-
-      if (
-        agora.getFullYear() === casamento.getFullYear() &&
-        agora.getMonth() === casamento.getMonth() &&
-        agora.getDate() === casamento.getDate()
-      ) {
-        el.textContent = '✨ É hoje! ✨';
-      } else if (agora < casamento) {
-        const diff = casamento - agora;
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((diff / (1000 * 60)) % 60);
-        const segundos = Math.floor((diff / 1000) % 60);
-        el.innerHTML = `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos para o nosso casamento 💖`;
-      } else {
-        el.textContent = calcTimeAgo('2025-06-18');
-      }
-    }
-
     const container = document.getElementById('events');
     events.forEach(event => {
       const [year, month, day] = event.date.split('-').map(Number);
@@ -146,7 +168,7 @@
       events.forEach(event => {
         const el = document.getElementById(`timer-${event.date}`);
         if (event.isCasamento) {
-          updateCasamentoTimer();
+          updateBodas();
         } else if (el) {
           el.textContent = calcTimeAgo(event.date);
         }
@@ -168,9 +190,9 @@
       const startDate = new Date('2023-03-07');
       const now = new Date();
 
-      const aniversariosLucas = countOccurrences(18, 11); // 18 de dezembro
-      const aniversariosEla = countOccurrences(9, 9);     // 9 de outubro
-      const diasNamorados = countOccurrences(12, 5);      // 12 de junho
+      const aniversariosLucas = countOccurrences(18, 11);
+      const aniversariosEla = countOccurrences(9, 9);
+      const diasNamorados = countOccurrences(12, 5);
 
       let anos = now.getFullYear() - startDate.getFullYear();
       let meses = now.getMonth() - startDate.getMonth();
@@ -189,7 +211,71 @@
       `;
     }
 
+    function updateBodas() {
+      const startDate = new Date('2025-06-18');
+      const now = new Date();
+
+      const bodas = [
+        { meses: 0, nome: 'Casamento' },
+        { meses: 1, nome: 'Bodas de Beijinho' },
+        { meses: 2, nome: 'Bodas de Sorvete' },
+        { meses: 3, nome: 'Bodas de Algodão Doce' },
+        { meses: 4, nome: 'Bodas de Pipoca' },
+        { meses: 5, nome: 'Bodas de Chocolate' },
+        { meses: 6, nome: 'Bodas de Plumas' },
+        { meses: 7, nome: 'Bodas de Purpurina' },
+        { meses: 8, nome: 'Bodas de Pompom' },
+        { meses: 9, nome: 'Bodas de Maternidade' },
+        { meses: 10, nome: 'Bodas de Pintura' },
+        { meses: 11, nome: 'Bodas de Chiclete' },
+        { meses: 12, nome: 'Bodas de Papel' },
+        { meses: 24, nome: 'Bodas de Algodão' },
+        { meses: 36, nome: 'Bodas de Trigo ou Couro' },
+        { meses: 48, nome: 'Bodas de Flores e Frutas' },
+        { meses: 60, nome: 'Bodas de Madeira ou Ferro' },
+        { meses: 72, nome: 'Bodas de Latão ou Lã' },
+        { meses: 84, nome: 'Bodas de Barro ou Papoula' },
+        { meses: 96, nome: 'Bodas de Papoula ou Cerâmica' },
+        { meses: 108, nome: 'Bodas de Estanho ou Zinco' },
+        { meses: 120, nome: 'Bodas de Aço' },
+        { meses: 132, nome: 'Bodas de Seda ou Ônix' },
+        { meses: 144, nome: 'Bodas de Linho ou Marfim' },
+        { meses: 156, nome: 'Bodas de Cristal' },
+        { meses: 168, nome: 'Bodas de Safira' },
+        { meses: 180, nome: 'Bodas de Ouro' }
+      ];
+
+      const container = document.getElementById('bodasCarousel');
+      container.innerHTML = '';
+
+      bodas.forEach(boda => {
+        const bodaDate = new Date(startDate);
+        bodaDate.setMonth(bodaDate.getMonth() + boda.meses);
+
+        let texto = '';
+        let classe = '';
+
+        const diffMs = bodaDate - now;
+        const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffDays > 0) {
+          texto = `Faltam ${diffDays} dia(s)`;
+          classe = 'future';
+        } else {
+          const diasPassados = Math.abs(diffDays);
+          texto = diasPassados === 0 ? 'É hoje!' : `Faz ${diasPassados} dia(s)`;
+          classe = 'past';
+        }
+
+        const card = document.createElement('div');
+        card.className = `boda-card ${classe}`;
+        card.innerHTML = `<h4>${boda.nome}</h4><p>${texto}</p>`;
+        container.appendChild(card);
+      });
+    }
+
     showSummary();
-    updateCasamentoTimer();
+    updateBodas();
   </script>
 </body>
+</html>
