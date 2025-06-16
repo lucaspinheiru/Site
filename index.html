@@ -123,15 +123,55 @@
       { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
     ];
 
-    const bodas = [
-      { nome: 'Bodas de Beijinhos 🥰', data: '2025-07-18' },
-      { nome: 'Bodas de Sorvete 🍦', data: '2025-08-18' },
-      { nome: 'Bodas de Algodão Doce 🍬', data: '2025-09-18' },
-      { nome: 'Bodas de Papel 📝', data: '2026-06-18' },
-      { nome: 'Bodas de Algodão 🧵', data: '2027-06-18' },
-      { nome: 'Bodas de Couro 💼', data: '2028-06-18' },
-      { nome: 'Bodas de Flores 🌸', data: '2029-06-18' }
+    // Lista de nomes das bodas (você pode ampliar ou alterar)
+    const nomesBodas = [
+      'Bodas de Beijinhos 🥰',
+      'Bodas de Sorvete 🍦',
+      'Bodas de Algodão Doce 🍬',
+      'Bodas de Papel 📝',
+      'Bodas de Algodão 🧵',
+      'Bodas de Couro 💼',
+      'Bodas de Flores 🌸',
+      'Bodas de Estanho 🛡️',
+      'Bodas de Barro 🏺',
+      'Bodas de Zinco ⚙️',
+      'Bodas de Seda 🧣',
+      'Bodas de Cristal 🔮',
+      'Bodas de Linho 🌾',
+      'Bodas de Marfim 🐘',
+      'Bodas de Chumbo ⚒️',
+      'Bodas de Ágata 💎',
+      'Bodas de Carvalho 🌳',
+      'Bodas de Granito 🪨',
+      'Bodas de Bronze 🏆',
+      'Bodas de Árvore 🌲',
+      'Bodas de Prata 🥈',
+      'Bodas de Pérola 🦪',
+      'Bodas de Coral 🪸',
+      'Bodas de Mármore 🏛️',
+      'Bodas de Safira 💙',
+      'Bodas de Opala 🔷',
+      'Bodas de Ouro 🥇',
+      'Bodas de Coral 💖',
+      'Bodas de Ébano ⚫',
+      'Bodas de Platina ⚪',
+      'Bodas de Diamante 💎'
     ];
+
+    function gerarBodasAteAnoFinal(casamentoAno, anoFinal) {
+      const bodasGeradas = [];
+      for (let ano = casamentoAno + 1; ano <= anoFinal; ano++) {
+        const anosCasados = ano - casamentoAno;
+        const nome = nomesBodas[(anosCasados - 1) % nomesBodas.length] + ` (${anosCasados} anos)`;
+        // Usa a mesma data do casamento (18 de junho)
+        const data = `${ano}-06-18`;
+        bodasGeradas.push({ nome, data });
+      }
+      return bodasGeradas;
+    }
+
+    const casamentoAno = 2025;
+    const bodas = gerarBodasAteAnoFinal(casamentoAno, 2100);
 
     function calcTimeDiff(futureDate) {
       const now = new Date();
