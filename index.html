@@ -81,6 +81,7 @@
       background-color: #f8f0fa;
       margin: 0 5px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .bodas-item.active {
@@ -123,8 +124,23 @@
       { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
     ];
 
-    // Lista de nomes das bodas (você pode ampliar ou alterar)
-    const nomesBodas = [
+    // Bodas mensais do 1º ano
+    const bodasMeses = [
+      { nome: 'Bodas de 1 Mês 💖', meses: 1, nomeTradicional: 'Bodas de Beijinhos 🥰' },
+      { nome: 'Bodas de 2 Meses 🍦', meses: 2, nomeTradicional: 'Bodas de Sorvete 🍦' },
+      { nome: 'Bodas de 3 Meses 🍬', meses: 3, nomeTradicional: 'Bodas de Algodão Doce 🍬' },
+      { nome: 'Bodas de 4 Meses 📝', meses: 4, nomeTradicional: 'Bodas de Papel 📝' },
+      { nome: 'Bodas de 5 Meses 🧵', meses: 5, nomeTradicional: 'Bodas de Algodão 🧵' },
+      { nome: 'Bodas de 6 Meses 💼', meses: 6, nomeTradicional: 'Bodas de Couro 💼' },
+      { nome: 'Bodas de 7 Meses 🌸', meses: 7, nomeTradicional: 'Bodas de Flores 🌸' },
+      { nome: 'Bodas de 8 Meses 🍯', meses: 8, nomeTradicional: 'Bodas de Mel 🍯' },
+      { nome: 'Bodas de 9 Meses 🎀', meses: 9, nomeTradicional: 'Bodas de Laços 🎀' },
+      { nome: 'Bodas de 10 Meses 🍷', meses: 10, nomeTradicional: 'Bodas de Estanho 🍷' },
+      { nome: 'Bodas de 11 Meses 🕯️', meses: 11, nomeTradicional: 'Bodas de Cristal 🕯️' },
+    ];
+
+    // Bodas anuais tradicionais (a partir do 1 ano)
+    const bodasTradicionais = [
       'Bodas de Beijinhos 🥰',
       'Bodas de Sorvete 🍦',
       'Bodas de Algodão Doce 🍬',
@@ -132,46 +148,80 @@
       'Bodas de Algodão 🧵',
       'Bodas de Couro 💼',
       'Bodas de Flores 🌸',
-      'Bodas de Estanho 🛡️',
-      'Bodas de Barro 🏺',
+      'Bodas de Mel 🍯',
+      'Bodas de Laços 🎀',
+      'Bodas de Estanho 🍷',
+      'Bodas de Cristal 🕯️',
       'Bodas de Zinco ⚙️',
+      'Bodas de Linho 👗',
+      'Bodas de Renda 👰',
+      'Bodas de Porcelana 🍽️',
+      'Bodas de Água 💧',
       'Bodas de Seda 🧣',
-      'Bodas de Cristal 🔮',
-      'Bodas de Linho 🌾',
+      'Bodas de Bronze 🛡️',
+      'Bodas de Cristal 💎',
       'Bodas de Marfim 🐘',
-      'Bodas de Chumbo ⚒️',
-      'Bodas de Ágata 💎',
-      'Bodas de Carvalho 🌳',
+      'Bodas de Cobre 🔨',
       'Bodas de Granito 🪨',
-      'Bodas de Bronze 🏆',
-      'Bodas de Árvore 🌲',
-      'Bodas de Prata 🥈',
-      'Bodas de Pérola 🦪',
-      'Bodas de Coral 🪸',
-      'Bodas de Mármore 🏛️',
-      'Bodas de Safira 💙',
-      'Bodas de Opala 🔷',
+      'Bodas de Palha 🌾',
+      'Bodas de Alumínio ⚙️',
+      'Bodas de Ágata 💎',
+      'Bodas de Coral 🐚',
+      'Bodas de Jaspe 🪨',
+      'Bodas de Níquel 🪙',
+      'Bodas de Azeviche 🌿',
+      'Bodas de Carvalho 🌳',
+      'Bodas de Ébano 🖤',
+      'Bodas de Cristal 🌟',
+      'Bodas de Ônix ⚫',
+      'Bodas de Safira 🔷',
+      'Bodas de Mármore 🪵',
+      'Bodas de Água Marinha 🌊',
+      'Bodas de Rubi ❤️',
+      'Bodas de Esmeralda 💚',
       'Bodas de Ouro 🥇',
-      'Bodas de Coral 💖',
-      'Bodas de Ébano ⚫',
-      'Bodas de Platina ⚪',
-      'Bodas de Diamante 💎'
+      'Bodas de Diamante 💎',
     ];
 
-    function gerarBodasAteAnoFinal(casamentoAno, anoFinal) {
-      const bodasGeradas = [];
-      for (let ano = casamentoAno + 1; ano <= anoFinal; ano++) {
-        const anosCasados = ano - casamentoAno;
-        const nome = nomesBodas[(anosCasados - 1) % nomesBodas.length] + ` (${anosCasados} anos)`;
-        // Usa a mesma data do casamento (18 de junho)
-        const data = `${ano}-06-18`;
-        bodasGeradas.push({ nome, data });
+    // Função para gerar bodas anuais até 2100 a partir da data inicial do casamento
+    function gerarBodasAnuais(dataCasamento) {
+      const bodas = [];
+      const inicio = new Date(dataCasamento);
+      const anoInicio = inicio.getFullYear();
+      const mes = inicio.getMonth();
+      const dia = inicio.getDate();
+
+      for (let ano = anoInicio; ano <= 2100; ano++) {
+        const anosPassados = ano - anoInicio;
+        if (anosPassados === 0) continue; // pular ano do casamento em si
+        if (anosPassados > bodasTradicionais.length) break;
+
+        const nome = bodasTradicionais[anosPassados - 1];
+        const dataBoda = new Date(ano, mes, dia);
+        bodas.push({ nome, data: dataBoda.toISOString().split('T')[0] });
       }
-      return bodasGeradas;
+      return bodas;
     }
 
-    const casamentoAno = 2025;
-    const bodas = gerarBodasAteAnoFinal(casamentoAno, 2100);
+    // Gerar bodas anuais automáticas
+    const bodasAnuais = gerarBodasAnuais('2025-06-18');
+
+    // Gerar bodas mensais do primeiro ano com datas dinâmicas (a partir do casamento)
+    function gerarBodasMensais(dataCasamento) {
+      const bodas = [];
+      const inicio = new Date(dataCasamento);
+      bodasMeses.forEach(({ nome, meses }) => {
+        const dataBoda = new Date(inicio);
+        dataBoda.setMonth(dataBoda.getMonth() + meses);
+        bodas.push({ nome, data: dataBoda.toISOString().split('T')[0] });
+      });
+      return bodas;
+    }
+
+    const bodasMesesGeradas = gerarBodasMensais('2025-06-18');
+
+    // Juntar bodas mensais + bodas anuais para o carrossel
+    const bodas = [...bodasMesesGeradas, ...bodasAnuais];
 
     function calcTimeDiff(futureDate) {
       const now = new Date();
@@ -202,6 +252,7 @@
         const div = document.createElement('div');
         div.className = 'bodas-item';
         div.textContent = boda.nome;
+        div.title = `Data: ${new Date(boda.data).toLocaleDateString('pt-BR')}`;
         div.addEventListener('click', () => {
           currentBodaIndex = index;
           updateBodas(index);
