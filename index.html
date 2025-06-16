@@ -110,118 +110,91 @@
   <div class="summary" id="summary"></div>
 
   <script>
-    const events = [
-      { date: '2023-03-07', title: '🌧️☂️', subtitle: 'Caroninha na chuva' },
-      { date: '2023-03-08', title: 'Não veio hoje?', subtitle: 'Primeira troca de mensagens' },
-      { date: '2023-04-22', title: 'John Wick', subtitle: 'Primeiro encontro' },
-      { date: '2023-05-05', title: '🙈😋', subtitle: 'Primeira visita em casa' },
-      { date: '2023-05-18', title: 'Pedido de namoro', subtitle: 'Oficialização' },
-      { date: '2023-06-03', title: '🏖️👩‍❤️‍👨', subtitle: 'Primeira viagem juntos' },
-      { date: '2023-06-06', title: '💍👩‍❤️‍👨', subtitle: 'Começamos a usar alianças' },
-      { date: '2023-10-13', title: '🏖️👩‍❤️‍👨', subtitle: 'Segunda viagem juntos' },
-      { date: '2024-01-14', title: '🏠👩‍❤️‍👨', subtitle: 'Começamos a morar juntos' },
-      { date: '2024-06-01', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },
-      { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
+    // Bodas do primeiro ano (mensais)
+    const bodasMensais = [
+      { periodo: '1 mês', nome: 'Bodas de Beijinhos 🥰', data: '2025-07-18' },
+      { periodo: '2 meses', nome: 'Bodas de Sorvete 🍦', data: '2025-08-18' },
+      { periodo: '3 meses', nome: 'Bodas de Algodão Doce 🍬', data: '2025-09-18' },
+      { periodo: '4 meses', nome: 'Bodas de Papel 📝', data: '2025-10-18' },
+      { periodo: '5 meses', nome: 'Bodas de Algodão 🧵', data: '2025-11-18' },
+      { periodo: '6 meses', nome: 'Bodas de Madeira 🪵', data: '2025-12-18' },
+      { periodo: '7 meses', nome: 'Bodas de Latão 🛠️', data: '2026-01-18' },
+      { periodo: '8 meses', nome: 'Bodas de Papoula 🌺', data: '2026-02-18' },
+      { periodo: '9 meses', nome: 'Bodas de Veludo 🧥', data: '2026-03-18' },
+      { periodo: '10 meses', nome: 'Bodas de Estanho 🏺', data: '2026-04-18' },
+      { periodo: '11 meses', nome: 'Bodas de Aço ⚙️', data: '2026-05-18' },
     ];
 
-    // Bodas mensais do 1º ano
-    const bodasMeses = [
-      { nome: 'Bodas de 1 Mês 💖', meses: 1, nomeTradicional: 'Bodas de Beijinhos 🥰' },
-      { nome: 'Bodas de 2 Meses 🍦', meses: 2, nomeTradicional: 'Bodas de Sorvete 🍦' },
-      { nome: 'Bodas de 3 Meses 🍬', meses: 3, nomeTradicional: 'Bodas de Algodão Doce 🍬' },
-      { nome: 'Bodas de 4 Meses 📝', meses: 4, nomeTradicional: 'Bodas de Papel 📝' },
-      { nome: 'Bodas de 5 Meses 🧵', meses: 5, nomeTradicional: 'Bodas de Algodão 🧵' },
-      { nome: 'Bodas de 6 Meses 💼', meses: 6, nomeTradicional: 'Bodas de Couro 💼' },
-      { nome: 'Bodas de 7 Meses 🌸', meses: 7, nomeTradicional: 'Bodas de Flores 🌸' },
-      { nome: 'Bodas de 8 Meses 🍯', meses: 8, nomeTradicional: 'Bodas de Mel 🍯' },
-      { nome: 'Bodas de 9 Meses 🎀', meses: 9, nomeTradicional: 'Bodas de Laços 🎀' },
-      { nome: 'Bodas de 10 Meses 🍷', meses: 10, nomeTradicional: 'Bodas de Estanho 🍷' },
-      { nome: 'Bodas de 11 Meses 🕯️', meses: 11, nomeTradicional: 'Bodas de Cristal 🕯️' },
-    ];
-
-    // Bodas anuais tradicionais (a partir do 1 ano)
-    const bodasTradicionais = [
-      'Bodas de Beijinhos 🥰',
-      'Bodas de Sorvete 🍦',
-      'Bodas de Algodão Doce 🍬',
-      'Bodas de Papel 📝',
-      'Bodas de Algodão 🧵',
-      'Bodas de Couro 💼',
-      'Bodas de Flores 🌸',
-      'Bodas de Mel 🍯',
-      'Bodas de Laços 🎀',
-      'Bodas de Estanho 🍷',
-      'Bodas de Cristal 🕯️',
+    // Bodas anuais (até 2100)
+    const bodasAnuaisNomes = [
+      'Bodas de Papel 📄',
+      'Bodas de Algodão 🌾',
+      'Bodas de Madeira 🌳',
+      'Bodas de Lã 🧶',
       'Bodas de Zinco ⚙️',
-      'Bodas de Linho 👗',
-      'Bodas de Renda 👰',
-      'Bodas de Porcelana 🍽️',
-      'Bodas de Água 💧',
-      'Bodas de Seda 🧣',
-      'Bodas de Bronze 🛡️',
-      'Bodas de Cristal 💎',
-      'Bodas de Marfim 🐘',
-      'Bodas de Cobre 🔨',
-      'Bodas de Granito 🪨',
-      'Bodas de Palha 🌾',
-      'Bodas de Alumínio ⚙️',
-      'Bodas de Ágata 💎',
       'Bodas de Coral 🐚',
-      'Bodas de Jaspe 🪨',
-      'Bodas de Níquel 🪙',
-      'Bodas de Azeviche 🌿',
-      'Bodas de Carvalho 🌳',
-      'Bodas de Ébano 🖤',
-      'Bodas de Cristal 🌟',
-      'Bodas de Ônix ⚫',
-      'Bodas de Safira 🔷',
-      'Bodas de Mármore 🪵',
-      'Bodas de Água Marinha 🌊',
+      'Bodas de Latão 🔩',
+      'Bodas de Barro 🏺',
+      'Bodas de Vime 🧺',
+      'Bodas de Estanho 🏆',
+      'Bodas de Bronze 🥉',
+      'Bodas de Seda 🧵',
+      'Bodas de Cristal 💎',
+      'Bodas de Marfim 🦣',
+      'Bodas de Chumbo 🏋️',
+      'Bodas de Ônix 🖤',
+      'Bodas de Bronze 🥉',
+      'Bodas de Água 💧',
+      'Bodas de Estanho 🏺',
+      'Bodas de Prata 🥈',
+      'Bodas de Pérola 🦪',
+      'Bodas de Renda 👗',
       'Bodas de Rubi ❤️',
-      'Bodas de Esmeralda 💚',
+      'Bodas de Cobre 🧡',
+      'Bodas de Safira 💙',
+      'Bodas de Latão 🛠️',
+      'Bodas de Ouro 🥇',
+      'Bodas de Estanho 🏺',
+      'Bodas de Diamante 💎',
+      'Bodas de Platina ⚙️',
+      'Bodas de Mármore 🏛️',
+      'Bodas de Zinco ⚙️',
+      'Bodas de Rubi ❤️',
+      'Bodas de Cristal 💎',
+      'Bodas de Pérola 🦪',
+      'Bodas de Safira 💙',
       'Bodas de Ouro 🥇',
       'Bodas de Diamante 💎',
+      'Bodas de Platina ⚙️'
+      // Pode continuar listando se quiser mais até 2100,
+      // ou repetir ciclo, ou customizar do jeito que quiser.
     ];
 
-    // Função para gerar bodas anuais até 2100 a partir da data inicial do casamento
-    function gerarBodasAnuais(dataCasamento) {
+    // Gera as bodas anuais com período + nome + data, de 1 ano até 2100
+    function geraBodasAnuais(inicioAno, fimAno) {
       const bodas = [];
-      const inicio = new Date(dataCasamento);
-      const anoInicio = inicio.getFullYear();
-      const mes = inicio.getMonth();
-      const dia = inicio.getDate();
+      let anoAtual = inicioAno;
+      const baseData = new Date('2026-06-18'); // começa após bodas mensais
 
-      for (let ano = anoInicio; ano <= 2100; ano++) {
-        const anosPassados = ano - anoInicio;
-        if (anosPassados === 0) continue; // pular ano do casamento em si
-        if (anosPassados > bodasTradicionais.length) break;
-
-        const nome = bodasTradicionais[anosPassados - 1];
-        const dataBoda = new Date(ano, mes, dia);
-        bodas.push({ nome, data: dataBoda.toISOString().split('T')[0] });
+      while (anoAtual <= fimAno) {
+        const anosPassados = anoAtual - inicioAno + 1;
+        const nomeIndex = (anosPassados - 1) % bodasAnuaisNomes.length;
+        const nome = bodasAnuaisNomes[nomeIndex];
+        const periodo = anosPassados === 1 ? '1 ano' : `${anosPassados} anos`;
+        const data = new Date(baseData.getTime());
+        data.setFullYear(anoAtual);
+        // Ajusta para o dia e mês fixos 18/06
+        const dataFormatada = data.toISOString().split('T')[0];
+        bodas.push({ periodo, nome, data: dataFormatada });
+        anoAtual++;
       }
       return bodas;
     }
 
-    // Gerar bodas anuais automáticas
-    const bodasAnuais = gerarBodasAnuais('2025-06-18');
+    const bodasAnuais = geraBodasAnuais(2026, 2100);
 
-    // Gerar bodas mensais do primeiro ano com datas dinâmicas (a partir do casamento)
-    function gerarBodasMensais(dataCasamento) {
-      const bodas = [];
-      const inicio = new Date(dataCasamento);
-      bodasMeses.forEach(({ nome, meses }) => {
-        const dataBoda = new Date(inicio);
-        dataBoda.setMonth(dataBoda.getMonth() + meses);
-        bodas.push({ nome, data: dataBoda.toISOString().split('T')[0] });
-      });
-      return bodas;
-    }
-
-    const bodasMesesGeradas = gerarBodasMensais('2025-06-18');
-
-    // Juntar bodas mensais + bodas anuais para o carrossel
-    const bodas = [...bodasMesesGeradas, ...bodasAnuais];
+    // Junta tudo num array só
+    const bodas = bodasMensais.concat(bodasAnuais);
 
     function calcTimeDiff(futureDate) {
       const now = new Date();
@@ -240,7 +213,9 @@
       const boda = bodas[index];
       const { dias, horas, minutos, segundos, future } = calcTimeDiff(boda.data);
       document.getElementById('bodas-date').textContent = new Date(boda.data).toLocaleDateString('pt-BR');
-      document.getElementById('bodas-timer').innerHTML = future ? `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos` : `Já se passaram <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos`;
+      document.getElementById('bodas-timer').innerHTML = future
+        ? `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos`
+        : `Já se passaram <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos`;
       document.querySelectorAll('.bodas-item').forEach((el, i) => {
         el.classList.toggle('active', i === index);
       });
@@ -251,8 +226,7 @@
       bodas.forEach((boda, index) => {
         const div = document.createElement('div');
         div.className = 'bodas-item';
-        div.textContent = boda.nome;
-        div.title = `Data: ${new Date(boda.data).toLocaleDateString('pt-BR')}`;
+        div.textContent = `${boda.periodo} - ${boda.nome}`;
         div.addEventListener('click', () => {
           currentBodaIndex = index;
           updateBodas(index);
@@ -261,28 +235,20 @@
       });
     }
 
-    let currentBodaIndex = 0;
-    buildBodasCarousel();
-    setInterval(() => updateBodas(currentBodaIndex), 1000);
-    updateBodas(currentBodaIndex);
-
-    events.sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    const container = document.getElementById('events');
-    events.forEach(event => {
-      const [year, month, day] = event.date.split('-').map(Number);
-      const localDate = new Date(year, month - 1, day);
-
-      const div = document.createElement('div');
-      div.className = 'event';
-      div.innerHTML = `
-        <div class="event-title">${event.title}</div>
-        <div class="event-subtitle">${event.subtitle}</div>
-        <div class="event-date">${localDate.toLocaleDateString('pt-BR')}</div>
-        <div class="timer" id="timer-${event.date}"></div>
-      `;
-      container.appendChild(div);
-    });
+    // Seu array original de eventos permanece intacto
+    const events = [
+      { date: '2023-03-07', title: '🌧️☂️', subtitle: 'Caroninha na chuva' },
+      { date: '2023-03-08', title: 'Não veio hoje?', subtitle: 'Primeira troca de mensagens' },
+      { date: '2023-04-22', title: 'John Wick', subtitle: 'Primeiro encontro' },
+      { date: '2023-05-05', title: '🙈😋', subtitle: 'Primeira visita em casa' },
+      { date: '2023-05-18', title: 'Pedido de namoro', subtitle: 'Oficialização' },
+      { date: '2023-06-03', title: '🏖️👩‍❤️‍👨', subtitle: 'Primeira viagem juntos' },
+      { date: '2023-06-06', title: '💍👩‍❤️‍👨', subtitle: 'Começamos a usar alianças' },
+      { date: '2023-10-13', title: '🏖️👩‍❤️‍👨', subtitle: 'Segunda viagem juntos' },
+      { date: '2024-01-14', title: '🏠👩‍❤️‍👨', subtitle: 'Começamos a morar juntos' },
+      { date: '2024-06-01', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },
+      { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
+    ];
 
     function calcTimeAgo(dateStr) {
       const [year, month, day] = dateStr.split('-').map(Number);
@@ -319,16 +285,28 @@
       }
     }
 
-    setInterval(() => {
-      events.forEach(event => {
-        const el = document.getElementById(`timer-${event.date}`);
-        if (event.isCasamento) {
-          updateCasamentoTimer();
-        } else if (el) {
-          el.textContent = calcTimeAgo(event.date);
-        }
-      });
-    }, 1000);
+    let currentBodaIndex = 0;
+    buildBodasCarousel();
+    setInterval(() => updateBodas(currentBodaIndex), 1000);
+    updateBodas(currentBodaIndex);
+
+    events.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const container = document.getElementById('events');
+    events.forEach(event => {
+      const [year, month, day] = event.date.split('-').map(Number);
+      const localDate = new Date(year, month - 1, day);
+
+      const div = document.createElement('div');
+      div.className = 'event';
+      div.innerHTML = `
+        <div class="event-title">${event.title}</div>
+        <div class="event-subtitle">${event.subtitle}</div>
+        <div class="event-date">${localDate.toLocaleDateString('pt-BR')}</div>
+        <div class="timer" id="timer-${event.date}"></div>
+      `;
+      container.appendChild(div);
+    });
 
     function countOccurrences(day, month) {
       const start = new Date('2023-03-07');
