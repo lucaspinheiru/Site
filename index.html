@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nosso Amor</title>
   <style>
     body {
@@ -54,7 +54,7 @@
   </div>
 
   <script>
-    const weddingDate = new Date(2025, 5, 18);  // Junho é mês 5
+    const weddingDate = new Date(2025, 5, 18); // Junho é mês 5
 
     const bodasMensais = [
       { periodo: '1 mês', nome: 'Bodas de Beijinhos 🥰', data: new Date(2025, 6, 18) },
@@ -93,7 +93,7 @@
         bodas.push({
           periodo: `${i + 1} ${i === 0 ? 'ano' : 'anos'}`,
           nome: nomes[i],
-          data: new Date(ano, 5, 18)
+          data: new Date(ano, 5, 18)  // Mês 5 = Junho
         });
       }
       return bodas;
@@ -115,6 +115,8 @@
       return { dias, horas, minutos, segundos, future };
     }
 
+    let selectedBoda = 0;
+
     function updateTimer() {
       const weddingDiff = calcTimeDiff(weddingDate);
       document.getElementById('weddingTimer').innerText = 
@@ -130,8 +132,6 @@
 
       setTimeout(updateTimer, 1000);
     }
-
-    let selectedBoda = 0;
 
     function renderCarousel() {
       const carousel = document.getElementById('bodasCarousel');
