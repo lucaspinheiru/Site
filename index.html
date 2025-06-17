@@ -1,4 +1,4 @@
-<!DOCTYPE html>More actions
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -64,29 +64,194 @@
       color: #444;
       margin: 10px 0;
     }
+
+    /* Novas styles para bodas */
+    #bodas-container {
+      max-width: 500px;
+      margin: 20px auto 40px auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+    }
+
+    #bodas-title {
+      font-size: 1.5em;
+      color: #d63384;
+      margin-bottom: 15px;
+    }
+
+    #bodas-names {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      padding-bottom: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: #d63384 #f0d5e5;
+      cursor: grab;
+      user-select: none;
+      justify-content: center;
+    }
+
+    #bodas-names::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    #bodas-names::-webkit-scrollbar-track {
+      background: #f0d5e5;
+      border-radius: 10px;
+    }
+
+    #bodas-names::-webkit-scrollbar-thumb {
+      background-color: #d63384;
+      border-radius: 10px;
+    }
+
+    .boda-item {
+      min-width: 150px;
+      padding: 10px 15px;
+      background: #f8cce9;
+      border-radius: 15px;
+      color: #6f42c1;
+      font-weight: 600;
+      white-space: nowrap;
+      flex-shrink: 0;
+      user-select: none;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .boda-item.selected {
+      background-color: #6f42c1;
+      color: white;
+      font-weight: 700;
+    }
+
+    #boda-timer {
+      margin-top: 15px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #6f42c1;
+      min-height: 40px;
+    }
   </style>
 </head>
 <body>
   <h1>Nosso Amor em Cada Momento</h1>
   <div id="events"></div>
+
   <div class="summary" id="summary"></div>
+
+  <!-- Seção Bodas -->
+  <div id="bodas-container">
+    <div id="bodas-title">Nossas Bodas</div>
+    <div id="bodas-names" tabindex="0" aria-label="Carrossel das bodas do casamento"></div>
+    <div id="boda-timer"></div>
+  </div>
 
   <script>
     const events = [
-      { date: '2023-03-07', title: '🌧️☂️', subtitle: 'Caroninha na chuva' },
-      { date: '2023-03-08', title: 'Não veio hoje?', subtitle: 'Primeira troca de mensagens' },
-      { date: '2023-04-22', title: 'John Wick', subtitle: 'Primeiro encontro' },
-      { date: '2023-05-05', title: '🙈😋', subtitle: 'Primeira visita em casa' },
-      { date: '2023-05-18', title: 'Pedido de namoro', subtitle: 'Oficialização' },
-      { date: '2023-06-03', title: '🏖️👩‍❤️‍👨', subtitle: 'Primeira viagem juntos' },
-      { date: '2023-06-06', title: '💍👩‍❤️‍👨', subtitle: 'Começamos a usar alianças' },
-      { date: '2023-10-13', title: '🏖️👩‍❤️‍👨', subtitle: 'Segunda viagem juntos' },
-      { date: '2024-01-14', title: '🏠👩‍❤️‍👨', subtitle: 'Começamos a morar juntos' },
-{ date: '2024-08-16', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },Add commentMore actions
+      { date: '2023-03-08', title: '🌧️☂️', subtitle: 'Caroninha na chuva' },
+      { date: '2023-03-09', title: 'Não veio hoje?', subtitle: 'Primeira troca de mensagens' },
+      { date: '2023-04-23', title: 'John Wick', subtitle: 'Primeiro encontro' },
+      { date: '2023-05-06', title: '🙈😋', subtitle: 'Primeira visita em casa' },
+      { date: '2023-05-19', title: 'Pedido de namoro', subtitle: 'Oficialização' },
+      { date: '2023-06-04', title: '🏖️👩‍❤️‍👨', subtitle: 'Primeira viagem juntos' },
+      { date: '2023-06-07', title: '💍👩‍❤️‍👨', subtitle: 'Começamos a usar alianças' },
+      { date: '2023-10-14', title: '🏖️👩‍❤️‍👨', subtitle: 'Segunda viagem juntos' },
+      { date: '2024-01-15', title: '🏠👩‍❤️‍👨', subtitle: 'Começamos a morar juntos' },
+      { date: '2024-08-17', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },
       { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
     ];
 
-    events.sort((a, b) => new Date(a.date) - new Date(b.date));
+    // Bodas - com datas d+1 (sempre 1 dia depois do casamento)
+    // O casamento é 2025-06-18 (mantido)
+    // Cada boda tem um nome e um tempo após o casamento (em meses ou anos)
+
+    // Função para criar data somando dias
+    function addDays(date, days) {
+      const result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
+    // Array de bodas: nome, meses/anos depois do casamento, tipo ('mes' ou 'ano')
+    // Você pode adicionar quantas bodas quiser seguindo o padrão.
+    const bodas = [
+      { nome: 'Bodas de Beijinhos (1 mês)', meses: 1, tipo: 'mes' },
+      { nome: 'Bodas de Papel (2 meses)', meses: 2, tipo: 'mes' },
+      { nome: 'Bodas de Algodão (3 meses)', meses: 3, tipo: 'mes' },
+      { nome: 'Bodas de Trigo (4 meses)', meses: 4, tipo: 'mes' },
+      { nome: 'Bodas de Seda (5 meses)', meses: 5, tipo: 'mes' },
+      { nome: 'Bodas de Madeira (6 meses)', meses: 6, tipo: 'mes' },
+      { nome: 'Bodas de Açúcar (7 meses)', meses: 7, tipo: 'mes' },
+      { nome: 'Bodas de Latão (8 meses)', meses: 8, tipo: 'mes' },
+      { nome: 'Bodas de Papoula (9 meses)', meses: 9, tipo: 'mes' },
+      { nome: 'Bodas de Zinco (10 meses)', meses: 10, tipo: 'mes' },
+      { nome: 'Bodas de Estanho (11 meses)', meses: 11, tipo: 'mes' },
+      { nome: 'Bodas de Algodão Doce (1 ano)', anos: 1, tipo: 'ano' },
+      { nome: 'Bodas de Trigo (2 anos)', anos: 2, tipo: 'ano' },
+      { nome: 'Bodas de Seda (3 anos)', anos: 3, tipo: 'ano' },
+      { nome: 'Bodas de Flores (4 anos)', anos: 4, tipo: 'ano' },
+      { nome: 'Bodas de Madeira (5 anos)', anos: 5, tipo: 'ano' },
+      { nome: 'Bodas de Ferro (6 anos)', anos: 6, tipo: 'ano' },
+      { nome: 'Bodas de Latão (7 anos)', anos: 7, tipo: 'ano' },
+      { nome: 'Bodas de Bronze (8 anos)', anos: 8, tipo: 'ano' },
+      { nome: 'Bodas de Estanho (9 anos)', anos: 9, tipo: 'ano' },
+      { nome: 'Bodas de Madeira (10 anos)', anos: 10, tipo: 'ano' },
+      { nome: 'Bodas de Estanho (11 anos)', anos: 11, tipo: 'ano' },
+      { nome: 'Bodas de Aço (12 anos)', anos: 12, tipo: 'ano' },
+      { nome: 'Bodas de Seda (13 anos)', anos: 13, tipo: 'ano' },
+      { nome: 'Bodas de Linho (14 anos)', anos: 14, tipo: 'ano' },
+      { nome: 'Bodas de Cristal (15 anos)', anos: 15, tipo: 'ano' },
+      { nome: 'Bodas de Granito (16 anos)', anos: 16, tipo: 'ano' },
+      { nome: 'Bodas de Madeira (17 anos)', anos: 17, tipo: 'ano' },
+      { nome: 'Bodas de Seda (18 anos)', anos: 18, tipo: 'ano' },
+      { nome: 'Bodas de Granito (19 anos)', anos: 19, tipo: 'ano' },
+      { nome: 'Bodas de Porcelana (20 anos)', anos: 20, tipo: 'ano' },
+      // Você pode continuar até 2100, se quiser
+    ];
+
+    // Data do casamento
+    const casamentoDate = new Date('2025-06-18');
+
+    // Função que calcula a data da boda somando meses ou anos + 1 dia
+    function getBodaDate(boda) {
+      let d = new Date(casamentoDate);
+      if (boda.tipo === 'mes') {
+        d.setMonth(d.getMonth() + boda.meses);
+      } else if (boda.tipo === 'ano') {
+        d.setFullYear(d.getFullYear() + boda.anos);
+      }
+      d.setDate(d.getDate() + 1); // d+1 para corrigir problema do GitHub
+      return d;
+    }
+
+    // Função que calcula o tempo para ou desde a boda, retorna texto
+    function calcBodaTimer(bodaDate) {
+      const now = new Date();
+      const diff = bodaDate - now;
+
+      if (diff > 0) {
+        // falta
+        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diff / (1000 * 60)) % 60);
+        const segundos = Math.floor((diff / 1000) % 60);
+        return `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos para esta boda 🎉`;
+      } else {
+        // já passou
+        const diffAbs = Math.abs(diff);
+        const dias = Math.floor(diffAbs / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diffAbs / (1000 * 60 * 60)) % 24);
+        const minutos = Math.floor((diffAbs / (1000 * 60)) % 60);
+        const segundos = Math.floor((diffAbs / 1000) % 60);
+        return `Esta boda foi há <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos atrás 💖`;
+      }
+    }
+
+    // Monta os eventos da timeline original
+    events.sort((a,b) => new Date(a.date) - new Date(b.date));
 
     function calcTimeAgo(dateStr) {
       const [year, month, day] = dateStr.split('-').map(Number);
@@ -124,6 +289,7 @@
       }
     }
 
+    // Exibir eventos na timeline
     const container = document.getElementById('events');
     events.forEach(event => {
       const [year, month, day] = event.date.split('-').map(Number);
@@ -149,8 +315,10 @@
           el.textContent = calcTimeAgo(event.date);
         }
       });
+      updateBodaTimerSelected();
     }, 1000);
 
+    // Função para contar aniversários e outras datas na summary
     function countOccurrences(day, month) {
       const start = new Date('2023-03-07');
       const end = new Date();
@@ -189,5 +357,15 @@
 
     showSummary();
     updateCasamentoTimer();
-  </script>
-</body>
+
+    // ********* Código do carrossel das bodas *********
+
+    const bodasContainer = document.getElementById('bodas-names');
+    const bodaTimerEl = document.getElementById('boda-timer');
+
+    // Cria os elementos de bodas no carrossel
+    bodas.forEach((boda, index) => {
+      const div = document.createElement('div');
+      div.className = 'boda-item';
+      div.tabIndex = 0;
+      div.setAttribute('role',
