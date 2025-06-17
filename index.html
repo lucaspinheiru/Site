@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>More actions
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -12,10 +12,12 @@
       padding: 20px;
       text-align: center;
     }
+
     h1 {
       color: #d63384;
     }
-    .event, .casamento-box, .bodas-box {
+
+    .event {
       background: #ffffff;
       border-radius: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -23,28 +25,29 @@
       margin: 20px auto;
       max-width: 400px;
     }
-    .event-title, .boda-name {
+
+    .event-title {
       font-size: 1.4em;
       color: #6f42c1;
     }
-    .event-subtitle, .boda-date, .boda-timer, .casamento-timer {
+
+    .event-subtitle {
       font-size: 1em;
       color: #555;
       margin-top: 5px;
+      margin-bottom: 10px;
     }
-    .carousel-controls {
-      display: flex;
-      justify-content: space-between;
+
+    .event-date {
+      color: #888;
+    }
+
+    .timer {
       margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.2em;
     }
-    .carousel-controls button {
-      background: #d63384;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
+
     .summary {
       margin-top: 40px;
       padding: 20px;
@@ -55,30 +58,17 @@
       margin-right: auto;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
+    .summary p {
+      font-size: 1.1em;
+      color: #444;
+      margin: 10px 0;
+    }
   </style>
 </head>
 <body>
   <h1>Nosso Amor em Cada Momento</h1>
-
   <div id="events"></div>
-
-  <div class="casamento-box">
-    <div class="event-title">💒 Nosso Casamento 💒</div>
-    <div class="event-subtitle">18 de Junho de 2025</div>
-    <div class="casamento-timer" id="casamento-timer"></div>
-  </div>
-
-  <div class="bodas-box">
-    <div class="event-title">🌸 Nossas Bodas 🌸</div>
-    <div class="boda-name" id="boda-name"></div>
-    <div class="boda-date" id="boda-date"></div>
-    <div class="boda-timer" id="boda-timer"></div>
-    <div class="carousel-controls">
-      <button onclick="changeBoda(-1)">⬅️</button>
-      <button onclick="changeBoda(1)">➡️</button>
-    </div>
-  </div>
-
   <div class="summary" id="summary"></div>
 
   <script>
@@ -92,14 +82,8 @@
       { date: '2023-06-06', title: '💍👩‍❤️‍👨', subtitle: 'Começamos a usar alianças' },
       { date: '2023-10-13', title: '🏖️👩‍❤️‍👨', subtitle: 'Segunda viagem juntos' },
       { date: '2024-01-14', title: '🏠👩‍❤️‍👨', subtitle: 'Começamos a morar juntos' },
-      { date: '2024-08-16', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },
+{ date: '2024-08-16', title: '🌴Primeiras Férias Juntos!!🏖️👩‍❤️‍👨', subtitle: 'E quarta viagem também' },Add commentMore actions
       { date: '2025-06-18', title: '💒👰🤵', subtitle: 'Nosso casamento', isCasamento: true }
-    ];
-
-    const bodas = [
-      { date: '2024-05-18', name: '🥇 Bodas de Papel 🥇' },
-      { date: '2025-05-18', name: '🪵 Bodas de Madeira 🪵' },
-      { date: '2026-05-18', name: '⚙️ Bodas de Ferro ⚙️' }
     ];
 
     events.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -119,7 +103,7 @@
     function updateCasamentoTimer() {
       const casamento = new Date('2025-06-18T00:00:00');
       const agora = new Date();
-      const el = document.getElementById('casamento-timer');
+      const el = document.getElementById('timer-2025-06-18');
       if (!el) return;
 
       if (
@@ -134,50 +118,17 @@
         const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const minutos = Math.floor((diff / (1000 * 60)) % 60);
         const segundos = Math.floor((diff / 1000) % 60);
-        el.innerHTML = `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos 💖`;
+        el.innerHTML = `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos para o nosso casamento 💖`;
       } else {
         el.textContent = calcTimeAgo('2025-06-18');
       }
     }
 
-    let currentBoda = 0;
-    function showBoda() {
-      const boda = bodas[currentBoda];
-      document.getElementById('boda-name').textContent = boda.name;
-      document.getElementById('boda-date').textContent = `Data: ${new Date(boda.date).toLocaleDateString('pt-BR')}`;
-
-      const agora = new Date();
-      const target = new Date(boda.date + 'T00:00:00');
-      const el = document.getElementById('boda-timer');
-
-      if (
-        agora.getFullYear() === target.getFullYear() &&
-        agora.getMonth() === target.getMonth() &&
-        agora.getDate() === target.getDate()
-      ) {
-        el.textContent = '✨ É hoje! ✨';
-      } else if (agora < target) {
-        const diff = target - agora;
-        const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        const minutos = Math.floor((diff / (1000 * 60)) % 60);
-        const segundos = Math.floor((diff / 1000) % 60);
-        el.innerHTML = `Faltam <strong>${dias}</strong> dias, <strong>${horas}</strong> horas, <strong>${minutos}</strong> minutos e <strong>${segundos}</strong> segundos`;
-      } else {
-        el.textContent = calcTimeAgo(boda.date);
-      }
-    }
-
-    function changeBoda(direction) {
-      currentBoda = (currentBoda + direction + bodas.length) % bodas.length;
-      showBoda();
-    }
-
     const container = document.getElementById('events');
     events.forEach(event => {
-      if (event.isCasamento) return; // Não mostrar o casamento na lista de eventos
       const [year, month, day] = event.date.split('-').map(Number);
       const localDate = new Date(year, month - 1, day);
+
       const div = document.createElement('div');
       div.className = 'event';
       div.innerHTML = `
@@ -189,211 +140,54 @@
       container.appendChild(div);
     });
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nosso Amor Completo</title>
-  <style>
-    body { font-family:'Segoe UI',sans-serif; background:#fff0f5; margin:0; padding:20px; text-align:center; }
-    h1 { color:#d63384; }
-    .event, .casamento-box, .bodas-box, .summary {
-      background:#fff; border-radius:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1);
-      padding:20px; margin:20px auto; max-width:400px;
-    }
-    .event-title, .boda-item, .casamento-title {
-      font-size:1.4em; color:#6f42c1;
-    }
-    .event-subtitle, .boda-date, .casamento-date {
-      font-size:1em; color:#555; margin-top:5px; margin-bottom:10px;
-    }
-    .timer, .boda-timer, .casamento-timer {
-      margin-top:10px; font-size:1.2em; color:#444;
-    }
-    .timer b, .boda-timer b, .casamento-timer b {
-      font-weight:bold;
-    }
-    .carrossel {
-      display:flex; overflow-x:auto; scroll-snap-type:x mandatory;
-      -webkit-overflow-scrolling:touch; margin:10px 0;
-    }
-    .carrossel-item {
-      flex:0 0 auto; scroll-snap-align:center; cursor:pointer;
-      background:#f8f0fa; padding:10px 15px; border-radius:10px;
-      margin:0 5px; white-space:nowrap;
-    }
-    .carrossel-item.active {
-      background:#e0c3f5; font-weight:bold;
-    }
-  </style>
-</head>
-<body>
+    setInterval(() => {
+      events.forEach(event => {
+        const el = document.getElementById(`timer-${event.date}`);
+        if (event.isCasamento) {
+          updateCasamentoTimer();
+        } else if (el) {
+          el.textContent = calcTimeAgo(event.date);
+        }
+      });
+    }, 1000);
 
-  <h1>Nossa História Completa</h1>
-
-  <div id="events"></div>
-
-  <div class="casamento-box">
-    <div class="casamento-title">💒 Nosso Casamento</div>
-    <div class="casamento-date" id="casamento-date"></div>
-    <div class="casamento-timer timer" id="casamento-timer"></div>
-  </div>
-
-  <div class="bodas-box">
-    <div class="boda-title">🎊 Nossas Bodas</div>
-    <div class="carrossel" id="carrossel"></div>
-    <div class="boda-date" id="boda-date"></div>
-    <div class="boda-timer timer" id="boda-timer"></div>
-  </div>
-
-  <div class="summary" id="summary"></div>
-
-  <script>
-    // 1. Datas do namoro
-    const events = [
-      { title:"🌧️☂️ Caroninha na chuva", date:new Date(2023,2,7) },
-      { title:"Não veio hoje? (Primeira troca)", date:new Date(2023,2,8) },
-      { title:"John Wick (1º encontro)", date:new Date(2023,3,22) },
-      { title:"🙈😋 Primeira visita em casa", date:new Date(2023,4,5) },
-      { title:"Pedido de namoro (Oficialização)", date:new Date(2023,4,18) },
-      { title:"🏖️👩‍❤️‍👨 Primeira viagem juntos", date:new Date(2023,5,3) },
-      { title:"💍👩‍❤️‍👨 Começamos alianças", date:new Date(2023,5,6) },
-      { title:"2ª viagem juntos", date:new Date(2023,9,13) },
-      { title:"🏠👩‍❤️‍👨 Começamos a morar juntos", date:new Date(2024,0,14) },
-      { title:"🌴 Primeiras férias juntos", date:new Date(2024,5,1) }
-    ];
-
-    // 2. Resumo de aniversários, dias no outro, pacote de sal etc.
     function countOccurrences(day, month) {
-      const start = new Date(2023,2,7);
-      const now = new Date();
+      const start = new Date('2023-03-07');
+      const end = new Date();
       let count = 0;
-      for(let y=start.getFullYear(); y<=now.getFullYear(); y++){
-        const d=new Date(y,month,day);
-        if(d>=start && d<=now) count++;
+      for (let year = start.getFullYear(); year <= end.getFullYear(); year++) {
+        const date = new Date(year, month, day);
+        if (date >= start && date <= end) count++;
       }
       return count;
     }
 
     function showSummary() {
+      const startDate = new Date('2023-03-07');
       const now = new Date();
-      const anosTot = now.getFullYear() - 2023;
-      let mesesTot = now.getMonth() - 2;
-      if(mesesTot<0){ mesesTot+=12; }
-      const aniversLucas = countOccurrences(18,10);
-      const aniversEla = countOccurrences(9,8);
-      const diasDosNamorados = countOccurrences(12,4);
-      document.getElementById('summary').innerHTML = `
-        <p>🎂 Já vivemos <b>${aniversLucas}</b> aniversários meus</p>
-        <p>🎉 Já vivemos <b>${aniversEla}</b> aniversários seus</p>
-        <p>💞 Estamos juntos há <b>${anosTot}</b> anos e <b>${mesesTot}</b> meses</p>
-        <p>💘 Já comemoramos <b>${diasDosNamorados}</b> Dias dos Namorados</p>
-        <p>🧂 E compartilhamos <b>01</b> pacote de sal 😂</p>
-      `;
-    }
 
-    // 3. Casamento
-    const marriageBase = new Date(2025,5,18); // 18/06/2025
-    document.getElementById('casamento-date').textContent = marriageBase.toLocaleDateString();
+      const aniversariosLucas = countOccurrences(18, 11); // 18 de dezembro
+      const aniversariosEla = countOccurrences(9, 9);     // 9 de outubro
+      const diasNamorados = countOccurrences(12, 5);      // 12 de junho
 
-    function updateCasamento() {
-      const now = new Date();
-      const diff = now - marriageBase;
-      const d = Math.floor(diff/1000/60/60/24);
-      const h = Math.floor((diff/1000/60/60)%24);
-      const m = Math.floor((diff/1000/60)%60);
-      const s = Math.floor((diff/1000)%60);
-      document.getElementById('casamento-timer').innerHTML =
-        `<b>${d}</b>d <b>${h}</b>h <b>${m}</b>m <b>${s}</b>s`;
-    }
-
-    // 4. Bodas (mensais + anuais até 2100)
-    const mesesNomes = ['Beijinhos','Sorvete','Algodão Doce','Papel','Algodão','Madeira','Latão','Papoula','Veludo','Estanho','Aço'];
-    const anosNomes = ['Papel','Algodão','Madeira','Lã','Zinco','Coral','Latão','Barro','Cerâmica','Estanho','Bronze','Seda','Cristal','Marfim','Safira','Rosa','Turquesa','Água-marinha','Porcelana','Prata','Louça','Palha','Opala','Pérola','Alexandrita','Crisoprásio','Herba','Coral','Nácar','Basalto','Granito','Mármore','Ágata','Cedro','Aventurina','Carvalho','Rubi','Esmeralda','Platina','Topázio','Ametista','Alabastro','Quartzo','Hematita','Ouro branco','Camélia','Ébano','Manganês','Turmalina','Lótus','Jasmim','Antúrio','Fênix','Diamante'];
-
-    const bodas = [];
-
-    for(let m=1; m<=11; m++){
-      const dt = new Date(marriageBase);
-      dt.setDate(dt.getDate()+1);
-      dt.setMonth(dt.getMonth()+m);
-      bodas.push({ label:`Bodas de ${mesesNomes[m-1]} (${m} mês${m>1?'es':''})`, date:dt });
-    }
-
-    for(let a=1; ; a++){
-      const year = marriageBase.getFullYear()+a;
-      if(year > 2100) break;
-      const dt = new Date(marriageBase);
-      dt.setDate(dt.getDate()+1);
-      dt.setFullYear(year);
-      const nome = anosNomes[(a-1)%anosNomes.length];
-      bodas.push({ label:`Bodas de ${nome} (${a} ano${a>1?'s':''})`, date:dt });
-    }
-
-    const car = document.getElementById('carrossel');
-    bodas.forEach((b,i)=>{
-      const div = document.createElement('div');
-      div.className='carrossel-item';
-      div.textContent=b.label;
-      div.onclick = ()=>selectBoda(i);
-      car.appendChild(div);
-    });
-
-    let currentB = 0;
-    function selectBoda(i){
-      currentB = i;
-      [...car.children].forEach((el, idx)=>el.classList.toggle('active', idx === i));
-      document.getElementById('boda-date').textContent = bodas[i].date.toLocaleDateString();
-    }
-
-    function updateBodasTimer(){
-      const now = new Date();
-      const target = bodas[currentB].date;
-      const diff = target - now;
-      const el = document.getElementById('boda-timer');
-      if(diff >=0){
-        const d = Math.floor(diff/1000/60/60/24);
-        const h = Math.floor((diff/1000/60/60)%24);
-        const m = Math.floor((diff/1000/60)%60);
-        const s = Math.floor((diff/1000)%60);
-        el.innerHTML = `Faltam <b>${d}</b>d <b>${h}</b>h <b>${m}</b>m <b>${s}</b>s`;
-      } else {
-        const d = Math.floor(-diff/1000/60/60/24);
-        el.innerHTML = `Há <b>${d}</b> dias`;
+      let anos = now.getFullYear() - startDate.getFullYear();
+      let meses = now.getMonth() - startDate.getMonth();
+      if (meses < 0) {
+        anos--;
+        meses += 12;
       }
-    }
 
-    // 5. Mostrar namoro, resumo, selecionar bodas
-    const container = document.getElementById('events');
-    events.forEach((ev, idx)=>{
-      const div = document.createElement('div');
-      div.className='event';
-      div.innerHTML = `
-        <div class="event-title">${ev.title}</div>
-        <div class="event-subtitle">${ev.date.toLocaleDateString()}</div>
-        <div class="timer" id="timer${idx}"></div>
+      const summary = document.getElementById('summary');
+      summary.innerHTML = `
+        <p>🎂 Já vivemos <strong>${aniversariosLucas}</strong> aniversários meus juntos</p>
+        <p>🎉 Já vivemos <strong>${aniversariosEla}</strong> aniversários seus juntos</p>
+        <p>💞 Estamos fazendo parte da vida um do outro há <strong>${anos} anos e ${meses} mês(es)</strong></p>
+        <p>💘 Já comemoramos <strong>${diasNamorados}</strong> Dias dos Namorados juntos</p>
+        <p>🧂 E compartilhamos <strong>01</strong> pacote de sal até agora 😄</p>
       `;
-      container.appendChild(div);
-    });
-
-    function updateNamoroTimers(){
-      const now = new Date();
-      events.forEach((ev, idx)=>{
-        const diff = now - ev.date;
-        const d = Math.floor(diff/1000/60/60/24);
-        document.getElementById(`timer${idx}`).innerHTML = `<b>${d}</b> dias`;
-      });
     }
 
-    selectBoda(0);
-    setInterval(()=>{
-      updateNamoroTimers();
-      showSummary();
-      updateCasamento();
-      updateBodasTimer();
-    }, 1000);
+    showSummary();
+    updateCasamentoTimer();
   </script>
-
 </body>
-</html>
